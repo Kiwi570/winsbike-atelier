@@ -309,6 +309,10 @@
       G.to('.atelier__photo--a', { clipPath: 'inset(0 0 0% 0)', duration: 1.3, ease: 'expo.out', scrollTrigger: { trigger: '.atelier__photos', start: 'top 75%' } });
       G.to('.atelier__photo--b', { clipPath: 'inset(0% 0 0 0)', duration: 1.3, ease: 'expo.out', delay: .2, scrollTrigger: { trigger: '.atelier__photos', start: 'top 75%' } });
       G.fromTo('.atelier__photo--a img', { scale: 1.2 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.atelier__photos', start: 'top bottom', end: 'bottom top', scrub: true } });
+      if ($('.atelier__band')) {
+        G.fromTo('.atelier__band', { clipPath: 'inset(0% 50% 0% 50% round 26px)' }, { clipPath: 'inset(0% 0% 0% 0% round 26px)', duration: 1.4, ease: 'expo.inOut', scrollTrigger: { trigger: '.atelier__band', start: 'top 82%' } });
+        G.fromTo('.atelier__band .grok', { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: '.atelier__band', start: 'top bottom', end: 'bottom top', scrub: true } });
+      }
     }
     // Rendez-vous simulé : créneaux pris dans les vraies heures d'ouverture
     const f = $('#rdv'); if (!f) return;
