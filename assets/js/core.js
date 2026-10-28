@@ -115,6 +115,20 @@
     }
   }
 
+  /* ---------- Barre d'action du bas (téléphone) ---------- */
+  function initActbar() {
+    const bar = $('.actbar'); if (!bar) return;
+    document.body.classList.add('has-actbar');
+    const setH = () => html.style.setProperty('--barres-h', `${bar.offsetHeight}px`);
+    if (window.ResizeObserver) new ResizeObserver(setH).observe(bar); setH();
+    // visible une fois le héros dépassé ; masquée sur les formulaires, la lettre d'information et le pied de page
+    const hero = $('[data-actbar-after]'); let past = !hero; const seen = new Set();
+    const upd = () => bar.classList.toggle('is-on', past && seen.size === 0);
+    if (hero) new IntersectionObserver(([e]) => { past = !e.isIntersecting && e.boundingClientRect.top < 0; upd(); }).observe(hero);
+    const io = new IntersectionObserver((es) => { es.forEach((e) => (e.isIntersecting ? seen.add(e.target) : seen.delete(e.target))); upd(); });
+    $$('form#rdv, form#pro-form, .nl, .ftr').forEach((el) => io.observe(el));
+  }
+
   /* ---------- Curseur disque ---------- */
   function initCursor() {
     if (isCalm() || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -398,7 +412,7 @@
   /* ---------- Démarrage ---------- */
   function boot() {
     applyCalm(html.classList.contains('calme'), false);
-    initScroll(); initHeader(); initCart(); initGrok(); initShutter(); initCursor(); initMagnetic(); initTilt();
+    initScroll(); initHeader(); initActbar(); initCart(); initGrok(); initShutter(); initCursor(); initMagnetic(); initTilt();
     $$('[data-year]').forEach((y) => { y.textContent = new Date().getFullYear(); });
     $$('form[data-nl]').forEach((f) => f.addEventListener('submit', (e) => {
       e.preventDefault(); const em = $('input[type=email]', f), ck = $('input[type=checkbox]', f), out = $('[data-nl-out]', f);

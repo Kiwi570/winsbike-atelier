@@ -87,6 +87,12 @@
   function fx() {
     const bar = $('.buybar'); const add = $('#fp-add');
     new IntersectionObserver(([e]) => bar.classList.toggle('is-on', !e.isIntersecting && e.boundingClientRect.top < 0)).observe(add);
+    // la barre s'efface dès que la lettre d'information ou le pied de page entre dans l'écran
+    const seen = new Set();
+    const io = new IntersectionObserver((es) => { es.forEach((e) => (e.isIntersecting ? seen.add(e.target) : seen.delete(e.target))); bar.classList.toggle('is-off', seen.size > 0); });
+    $$('.nl, .ftr').forEach((el) => io.observe(el));
+    const setH = () => document.documentElement.style.setProperty('--barres-h', `${bar.offsetHeight}px`);
+    if (window.ResizeObserver) new ResizeObserver(setH).observe(bar); setH();
     if (!G || calm) return;
     G.from(['#fp-brand', '#fp-name', '.fp__price', '#fp-meta', '#fp-opts', '.fp__buy'], { autoAlpha: 0, y: 26, duration: .8, ease: 'power3.out', stagger: .06 });
     G.from('#fp-main img', { autoAlpha: 0, scale: .85, rotation: -4, duration: 1.3, ease: 'expo.out' });
