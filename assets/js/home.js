@@ -113,7 +113,7 @@
     if (!G || calm || !desktop()) return;
     const panels = $$('.mq', track);
     const total = () => track.scrollWidth - innerWidth;
-    const tween = G.to(track, { x: () => -total(), ease: 'none', scrollTrigger: { trigger: '.marques__pin', pin: true, scrub: .6, end: () => '+=' + Math.round(total() * .72), invalidateOnRefresh: true, anticipatePin: 1,
+    const tween = G.to(track, { x: () => -total(), ease: 'none', scrollTrigger: { trigger: '.marques__pin', pin: true, scrub: .6, end: () => '+=' + Math.round(total() * .72), invalidateOnRefresh: true,
       onUpdate: (s) => { const bars = $$('.marques__dots b'); const k = s.progress * (bars.length - 1); bars.forEach((b, i) => { b.style.transform = `scaleX(${Math.max(0, Math.min(1, k - i + 1))})`; }); } } });
     panels.forEach((pn) => {
       const st = { trigger: pn, containerAnimation: tween, start: 'left 80%', end: 'right 20%', scrub: true };
@@ -150,7 +150,7 @@
     const slots = [{ x: .61, y: .27 }, { x: .72, y: .27 }, { x: .83, y: .27 }, { x: .93, y: .27 }];
     const scatter = [{ x: -.1, y: .1, r: -60 }, { x: 1.1, y: -.1, r: 80 }, { x: -.1, y: 1.1, r: 120 }, { x: 1.15, y: 1.1, r: -90 }];
     partEls.forEach((el, i) => { G.set(el, { left: 0, top: 0, xPercent: -50, yPercent: -50, x: scatter[i].x * innerWidth, y: scatter[i].y * innerHeight, rotation: scatter[i].r, autoAlpha: 0, scale: .6 }); });
-    const tl = G.timeline({ scrollTrigger: { trigger: pinEl, pin: true, scrub: .8, start: 'top top', end: '+=260%', anticipatePin: 1 } });
+    const tl = G.timeline({ scrollTrigger: { trigger: pinEl, pin: true, scrub: .8, start: 'top top', end: '+=260%' } });
     tl.from('.beast__img', { autoAlpha: 0, scale: .9, rotation: -2, duration: .6 })
       .from('.beast__head > *', { autoAlpha: 0, y: 30, stagger: .05, duration: .4 }, 0)
       .from('.beast__specs > *', { autoAlpha: 0, x: 20, stagger: .03, duration: .3 }, .1);
